@@ -129,7 +129,7 @@ public class AlarmProducer implements Runnable {
 	public void run() {
 		while (true) {
 			try {
-				Thread.sleep(10000);
+				Thread.sleep(60000);
 				for (String key : sMap.keySet()) {
 					Session s = sMap.get(key); 
 					if (s.isOpen()) {
@@ -137,7 +137,8 @@ public class AlarmProducer implements Runnable {
 							alarms.stream().forEach( alarm -> {
 								try {
 									s.getBasicRemote().sendText(alarm);
-								} catch (IOException e) {
+									Thread.sleep(3000);
+								} catch (Exception e) {
 									e.printStackTrace();
 								}
 							});
