@@ -23,12 +23,12 @@ import org.json.simple.parser.ParseException;
 
 public class AlarmProducer implements Runnable {
 
-	private static AlarmProducer instance;
-	private static Map<String, Session> sMap = new HashMap<String, Session>();
+	private Map<String, Session> sMap = new HashMap<String, Session>();
 	ArrayList<String> alarms = new ArrayList<String>();
 	private String type = "";
-	private AlarmProducer(String type) {
+	public AlarmProducer(String type, Session s) {
 		this.type = type;
+		sMap.put(s.getId(), s);
 		readAllaAlarms();
 		init();
 		lookupAlarmsChange();
@@ -124,16 +124,7 @@ public class AlarmProducer implements Runnable {
 		}
 		return jsonArray;
 	}
-	public static void add(Session s) {
-		sMap.put(s.getId(), s);
-	}
 
-	public static void initialize(String type) {
-		if (instance == null) {
-			instance = new AlarmProducer(type);
-			new Thread(instance).start();
-		}
-	}
 	@Override
 	public void run() {
 		while (true) {

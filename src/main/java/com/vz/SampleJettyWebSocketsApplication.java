@@ -27,7 +27,9 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
+import com.vz.sim.CiscoWebSocketEndpoint;
 import com.vz.sim.EcpWebSocketEndpoint;
+import com.vz.sim.JunWebSocketEndpoint;
 
 @Configuration
 @EnableAutoConfiguration
@@ -45,8 +47,16 @@ public class SampleJettyWebSocketsApplication extends SpringBootServletInitializ
 	}
 
 	@Bean
-	public EcpWebSocketEndpoint reverseWebSocketEndpoint() {
+	public EcpWebSocketEndpoint ecpWebSocketEndpoint() {
 		return new EcpWebSocketEndpoint();
+	}
+	@Bean
+	public JunWebSocketEndpoint junWebSocketEndpoint() {
+		return new JunWebSocketEndpoint();
+	}
+	@Bean
+	public CiscoWebSocketEndpoint ciscoWebSocketEndpoint() {
+		return new CiscoWebSocketEndpoint();
 	}
 
 	@Bean

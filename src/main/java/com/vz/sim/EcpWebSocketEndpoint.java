@@ -28,12 +28,12 @@ public class EcpWebSocketEndpoint {
 	@OnOpen
 	public void onOpen(Session session) {
 		System.out.println("session.getId()   "+session.getId());
-		AlarmProducer.initialize("ecp");
-		AlarmProducer.add(session);
+		AlarmProducer instance = new AlarmProducer("ecp", session);
+		new Thread(instance).start();
 	}
 	@OnMessage
 	public void handleMessage(Session session, String message) throws IOException {
 		session.getBasicRemote()
-				.sendText("Reversed: " + new StringBuilder(message).reverse());
+				.sendText("ecp: " + new StringBuilder(message).reverse());
 	}
 }
